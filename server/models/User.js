@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      unique: true,
+      unique: false,
       minlength: 4,
       maxlength: 10,
       required: "Name is required"
@@ -49,6 +49,7 @@ userSchema.pre("findOne", autoPopulateFollowingAndFollowers);
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 
 /* The MongoDBErrorHandler plugin gives us a better 'unique' error, rather than: "11000 duplicate key" */
-userSchema.plugin(mongodbErrorHandler);
+// Update, this plugin was breaking and couldn't find a solution.
+// userSchema.plugin(mongodbErrorHandler);
 
 module.exports = mongoose.model("User", userSchema);
